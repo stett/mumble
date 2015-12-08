@@ -15,11 +15,12 @@ endif()
 include_directories(${Mumble_SOURCE_DIR}/include,
                     ${Mumble_SOURCE_DIR}/extern/include)
 
-
-#find_package(SFML 2 REQUIRED system audio) #window graphics network audio
 link_directories(${Mumble_SOURCE_DIR}/extern/lib)
 
 add_executable(Mumble main.cpp)
 
+target_compile_definitions(Mumble PRIVATE SFML_STATIC)
 
-target_link_libraries(Mumble sfml-system sfml-audio)
+target_link_libraries(Mumble sfml-audio-s sfml-system-s openal32 flac vorbisenc vorbisfile vorbis ogg)
+
+
