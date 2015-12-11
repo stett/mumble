@@ -17,7 +17,8 @@ include_directories(${Mumble_SOURCE_DIR}/include,
 
 link_directories(${Mumble_SOURCE_DIR}/extern/lib)
 
-add_executable(Mumble main.cpp)
+file(GLOB MumbleSourceFiles "*.cpp")
+add_executable(Mumble ${MumbleSourceFiles})
 
 target_compile_definitions(Mumble PRIVATE SFML_STATIC)
 
