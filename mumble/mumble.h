@@ -6,6 +6,7 @@
 #include <SFML/Audio.hpp>
 
 
+float lerp(float a, float b, float x);
 float sin_one(float x);
 
 
@@ -24,6 +25,7 @@ public:
     // Members
 private:
     std::string phrase;
+    int position;
     Voice voice;
     unsigned int rate;
     short *data;

@@ -11,7 +11,7 @@
 Mumble::Mumble(const std::string &phrase) : Mumble(phrase, Voice()) {}
 
 Mumble::Mumble(const std::string &phrase, const Voice &voice)
-: phrase(phrase), voice(voice), rate(10000)
+: phrase(phrase), position(0), voice(voice), rate(10000)
 {
     // Generate the buffer data
     size = rate; // ONE SECOND :P
@@ -19,7 +19,7 @@ Mumble::Mumble(const std::string &phrase, const Voice &voice)
     for (int i = 0; i < size; ++i)
     {
         float max = (float)std::numeric_limits<short>::max();
-        float x = voice.averagePitch * (float)i / (float)size;
+        float x = lerp(1.0f, 2.0f, (float)i/(float)size) * voice.averagePitch * (float)i / (float)size;
         data[i] = (short)(max * voice.baseWaveForm(x));
     }
 
@@ -28,16 +28,23 @@ Mumble::Mumble(const std::string &phrase, const Voice &voice)
     sound.setBuffer(buffer);
 }
 
-Mumble::~Mumble() {
+Mumble::~Mumble()
+{
     delete[] data;
 }
 
-void Mumble::play() {
+void Mumble::play()
+{
     sound.play();
 }
 
-void Mumble::stop() {
+void Mumble::stop()
+{
     sound.stop();
+}
+
+float lerp(float a, float b, float x) {
+    return a + x * (b - a);
 }
 
 float sin_one(float x) {
